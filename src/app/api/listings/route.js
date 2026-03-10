@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "@/lib/mongodb"; // ඔයාගේ mongodb connect කරන file එකේ path එක බලන්න
-import Listing from "@/models/Listing"; // ඔයාගේ Model එකේ path එක
+import connectDB from "@/lib/mongodb"; // {} අයින් කරලා නම connectDB කියලා දාන්න
+import Listing from "@/models/Listing";
 
 export async function POST(req) {
   try {
-    // 1. Database එකට connect වීම
-    await connectToDatabase();
-
-    // 2. Frontend එකෙන් එවන data ටික ගන්න
+    await connectDB(); // මෙතනත් නම connectDB() ලෙස වෙනස් කරන්න
     const data = await req.json();
-
-    // 3. MongoDB එකේ අලුත් Listing එකක් create කිරීම
     const newListing = await Listing.create(data);
 
-    // 4. සාර්ථක නම් 201 response එකක් යැවීම
     return NextResponse.json(
       { message: "Listing created successfully", data: newListing },
       { status: 201 }
@@ -27,10 +21,9 @@ export async function POST(req) {
   }
 }
 
-// Listing ඔක්කොම ගන්න GET method එකත් මෙතනම ලියන්න පුළුවන්
 export async function GET() {
   try {
-    await connectToDatabase();
+    await connectDB(); // මෙතනත් connectDB() කරන්න
     const listings = await Listing.find({}).sort({ createdAt: -1 });
     return NextResponse.json(listings);
   } catch (error) {

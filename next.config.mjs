@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // මෙතන අර කලින් තිබුණු eslint කෑල්ල සම්පූර්ණයෙන්ම අයින් කරලා තියෙන්නේ
   images: {
     remotePatterns: [
       {
@@ -8,13 +9,6 @@ const nextConfig = {
       },
     ],
   },
-  // මේ පේළි ටික අලුතින් එකතු කරන්න
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  }
 };
 
 export default nextConfig;
